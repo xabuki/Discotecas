@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DiscotecadbService } from '../core/discotecadbservice.service';
+
+import {DiscotecaService} from '../share/discoteca.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { IDiscoteca } from '../share/interfaces';
@@ -14,7 +15,7 @@ export class CreatePage implements OnInit {
  discotecaForm: FormGroup;
   constructor(
     private router: Router,
-    private discotecadbService: DiscotecadbService,
+    private discotecaService: DiscotecaService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
@@ -51,7 +52,7 @@ export class CreatePage implements OnInit {
     this.discoteca = this.discotecaForm.value;
     let nextKey = this.discoteca.name.trim();
     this.discoteca.id = nextKey;
-    this.discotecadbService.setItem(nextKey, this.discoteca);
+    this.discotecaService.createDiscoteca( this.discoteca);
     console.warn(this.discotecaForm.value);
   }
 }

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { IDiscoteca } from '../share/interfaces';
-import { DiscotecadbService } from '../core/discotecadbservice.service';
+import {DiscotecaService} from '../share/discoteca.service';
 import { Router } from '@angular/router';
 import { DetailsPage } from '../details/details.page';
 @Component({
@@ -9,22 +9,8 @@ import { DetailsPage } from '../details/details.page';
 })
 export class HomePage implements OnInit {
   public discotecas: IDiscoteca[];
-  discotecasinit: IDiscoteca[] = [
-    {
-      id: '1',
-      name: 'Indara',
-      cover:
-        'https://owaytours.com/blog/wp-content/uploads/2019/08/discotecas-cordoba-min.jpg',
-      description: "Indara es una discoteca localizada al lado de la estacion de autobuses en pamplona"
-    },
-    {
-      id: '2',
-      name: 'Klabe',
-      cover: 'https://www.bilbaoplan.com/wp-content/uploads/2016/04/discoteca-1.jpg',
-      description: "clave es una discoteca que se encuentra en pamplona"
-    }
-  ]
-  constructor(private discotecadbService: DiscotecadbService, private route:
+ 
+  constructor(private discotecaService: DiscotecaService, private route:
     Router) { }
   ngOnInit(): void {
     // If the database is empty set initial values
@@ -38,15 +24,15 @@ export class HomePage implements OnInit {
     this.retrieveValues();
   }
   inicialization() {
-    if (this.discotecadbService.empty()) {
-      this.discotecasinit.forEach(discoteca => {
-        this.discotecadbService.setItem(discoteca.id, discoteca);
-      });
-    }
+   // if (this.discotecaService.empty()) {
+      //this.discotecasinit.forEach(discoteca => {
+      // this.discotecaService.setItem(discoteca.id, discoteca);
+   //   });
+    //}
   }
   retrieveValues() {
     // Retrieve values
-    this.discotecadbService.getAll().then(
+    this.discotecaService.getDiscotecas().subscribe(
       (data) => this.discotecas = data
     );
   }

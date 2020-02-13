@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DiscotecadbService } from '../core/discotecadbservice.service';
+
+import {DiscotecaService} from '../share/discoteca.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { IDiscoteca } from '../share/interfaces';
@@ -17,12 +18,12 @@ export class EditPage implements OnInit {
   constructor(
     private activatedrouter: ActivatedRoute,
     private router: Router,
-    private discotecadbService: DiscotecadbService,
+    private discotecaService: DiscotecaService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
     this.id = this.activatedrouter.snapshot.params.id;
-    this.discotecadbService.getItem(this.id).then(
+    this.discotecaService.getDiscotecaById(this.id).subscribe(
       (data: IDiscoteca) => {
         this.discoteca = data
         this.discotecaForm.get('name').setValue(this.discoteca.name);
@@ -32,8 +33,6 @@ export class EditPage implements OnInit {
     );
     this.discotecaForm = new FormGroup({
       name: new FormControl(''),
-      genre: new FormControl(''),
-      date: new FormControl(''),
       cover: new FormControl(''),
       description: new FormControl(''),
     });
@@ -63,11 +62,11 @@ export class EditPage implements OnInit {
     toast.present();
   }
   saveDiscoteca() {
-    this.discotecadbService.remove(this.id);
+    //this.discotecaService.deleteDiscoteca(this.id);
     this.discoteca = this.discotecaForm.value;
-    let nextKey = this.discoteca.name.trim();
-    this.discoteca.id = nextKey;
-    this.discotecadbService.setItem(nextKey, this.discoteca);
+    //let nextKey = this.discoteca.name.trim();
+    this.discoteca.id = this.id;
+    this.discotecaService.updateDiscoteca( this.discoteca);
     console.warn(this.discotecaForm.value);
   }
 }
