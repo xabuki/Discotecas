@@ -60,14 +60,14 @@ export class DiscotecaService {
       );
   }
 
-  updateDiscoteca(product: IDiscoteca): Observable<IDiscoteca> {
+  updateDiscoteca(discoteca: IDiscoteca): Observable<IDiscoteca> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    const url = `${this.discotecaUrl}/${product.id}`;
-    return this.http.put<IDiscoteca>(url, product, { headers: headers })
+    const url = `${this.discotecaUrl}/${discoteca.id}`;
+    return this.http.put<IDiscoteca>(url, discoteca, { headers: headers })
       .pipe(
-        tap(() => console.log('updateProduct: ' + product.id)),
-        // Return the product on an update
-        map(() => product),
+        tap(() => console.log('updateProduct: ' + discoteca.id)),
+        // Return the disco on an update
+        map(r => discoteca = r),
         catchError(this.handleError)
       );
   }

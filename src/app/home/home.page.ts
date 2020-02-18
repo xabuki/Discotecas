@@ -33,7 +33,9 @@ export class HomePage implements OnInit {
   retrieveValues() {
     // Retrieve values
     this.discotecaService.getDiscotecas().subscribe(
-      (data) => this.discotecas = data
+      data => {
+        this.discotecas = data
+      }
     );
   }
   discotecaTapped(discoteca) {

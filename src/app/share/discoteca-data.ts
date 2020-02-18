@@ -6,7 +6,7 @@ export class DiscotecaData implements InMemoryDbService {
       let discotecas =[
         {
             id: '1',
-            name: 'Indara',
+            name: 'Indaraj',
             cover:
               'https://owaytours.com/blog/wp-content/uploads/2019/08/discotecas-cordoba-min.jpg',
             description: "Indara es una discoteca localizada al lado de la estacion de autobuses en pamplona"
