@@ -1,35 +1,32 @@
 <ion-header>
   <ion-toolbar>
-  <ion-buttons slot="end">
-  <ion-menu-button></ion-menu-button>
-  </ion-buttons>
-  <ion-button [routerLink]="['/home']" routerDirection="back"
- color="medium">
-  <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
-  </ion-button>
-  <ion-title slot="secondary">Detalles de Discoteca</ion-title>
+    <ion-buttons slot="end">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-button [routerLink]="['/home']" routerDirection="back" color="medium">
+      <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
+    </ion-button>
+    <ion-title slot="secondary">Detalles de la Discoteca</ion-title>
   </ion-toolbar>
- </ion-header>
- <ion-content>
-  <ion-card *ngIf="discoteca">
-  <img src="{{discoteca.cover}}">
-  <ion-card-header>
-  {{discoteca.name}}
-  </ion-card-header>
-  <ion-card-content>
-  <ion-list>
-  <ion-item>
-  {{discoteca.description}}
-  </ion-item>
-  </ion-list>
-  <ion-button shape="round" color="secondary" size="small"
- (click)="editRecord(discoteca)">
-  <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
-  </ion-button>
-  <ion-button shape="round" color="danger" size="small"
- (click)="removeRecord(discoteca.id)">
-  <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
-  </ion-button>
-  </ion-card-content>
+</ion-header>
+<ion-content>
+  <ion-card *ngIf="tieneDiscos">
+    <img src="{{discoteca.cover}}">
+    <ion-card-header>
+      {{discoteca.name}}
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          {{discoteca.description}}
+        </ion-item>
+      </ion-list>
+      <ion-button shape="round" color="secondary" size="small" (click)="editRecord(discoteca)">
+        <ion-icon size="small" slot="icon-only" name="create"></ion-icon>
+      </ion-button>
+      <ion-button shape="round" color="danger" size="small" (click)="removeRecord(discoteca.id)">
+        <ion-icon size="small" slot="icon-only" name="trash"></ion-icon>
+      </ion-button>
+    </ion-card-content>
   </ion-card>
- </ion-content>
+</ion-content>

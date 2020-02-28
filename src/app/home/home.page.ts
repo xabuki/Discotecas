@@ -1,33 +1,38 @@
 import { Component, OnInit } from '@angular/core';
-import { DiscocrudService } from './../core/discocrud.service';
+import { IDiscoteca } from '../share/interfaces';
+import { DiscosdbService } from '../core/discosdb.service';
 import { Router } from '@angular/router';
+
+
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html'
 })
 export class HomePage implements OnInit {
-  discos: any;
-  discoName: string;
-  discoCover: string;
-  discoDescription: string;
-  constructor(private discocrudService: DiscocrudService , private route:
+  public discotecas: IDiscoteca[];
+
+  constructor(private discodbService: DiscosdbService, private route:
     Router) { }
-  ngOnInit() {
-    this.discocrudService.read_Discos().subscribe(data => {
-      this.discos = data.map(e => {
-        return {
-          id: e.payload.doc.id,
-          name: e.payload.doc.data()['name'],
-          cover: e.payload.doc.data()['cover'],
-          description: e.payload.doc.data()['description']
-        };
-      })
-      console.log(this.discos);
-    });
+  ngOnInit(): void {
+    this.retrieveValues();
+    
   }
 
-  discotecaTapped(disco) {
-    this.route.navigate(['details', disco.id]);
+  ionViewDidEnter() {
+    // Remove elements if it already has values
+    if (this.discotecas !== undefined) {
+      this.discotecas.splice(0);
+    }
+    this.retrieveValues();
   }
 
+  retrieveValues(){
+    this.discodbService.read_discos().subscribe(
+      (data: IDiscoteca[]) => this.discotecas = data
+    );
+  }
+
+  discotecaTapped(discoteca) {
+    this.route.navigate(['details', discoteca._id]);
+  }
 }

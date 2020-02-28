@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DiscotecadbService } from '../core/discotecadbservice.service';
-import {DiscocrudService} from '../core/discocrud.service';
+import { DiscosdbService } from '../core/discosdb.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { IDiscoteca } from '../share/interfaces';
@@ -14,44 +13,31 @@ import { IDiscoteca } from '../share/interfaces';
 export class EditPage implements OnInit {
   id: string;
   discoteca: IDiscoteca;
-  discotecaForm: FormGroup;
-  discoService:DiscocrudService;
-  discos: any;
-  discoName: string;
-  discoCover: string;
-  discoDescription: string;
-  
+
+  discoForm: FormGroup;
   constructor(
     private activatedrouter: ActivatedRoute,
     private router: Router,
-    private discotecadbService: DiscotecadbService,
+    private discodbService: DiscosdbService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
-    this.id = this.activatedrouter.snapshot.params.id;
-     this.discos =this.discoService.select_Disco(this.id);
-    
-        
-    this.discotecaForm = new FormGroup({
+    this.id = this.activatedrouter.snapshot.params._id;
+
+    this.discoForm = new FormGroup({
       name: new FormControl(''),
       cover: new FormControl(''),
       description: new FormControl(''),
     });
 
-    this.discoService.read_Discos().subscribe(data => {
-      data.map(e => {
-        if (e.payload.doc.id == this.id) {
-            this.discotecaForm.get('name').setValue(e.payload.doc.data()['name']);
-            this.discotecaForm.get('cover').setValue(e.payload.doc.data()['cover']);
-            this.discotecaForm.get('description').setValue(e.payload.doc.data()['description']);         
-        }
-      })
-    });
-
+    this.discodbService.read_discosById(this.id)
+      .subscribe(
+        (data: any) => this.displayDiscoteca(data),
+      );
   }
-  async onSubmit(disco) {
+  async onSubmit() {
     const toast = await this.toastController.create({
-      header: 'Guardar discoteca',
+      header: 'Guardar Discoteca',
       position: 'top',
       buttons: [
         {
@@ -59,7 +45,7 @@ export class EditPage implements OnInit {
           icon: 'save',
           text: 'ACEPTAR',
           handler: () => {
-            this.saveDiscoteca();
+            this.UpdateRecord();
             this.router.navigate(['home']);
           }
         }, {
@@ -73,18 +59,19 @@ export class EditPage implements OnInit {
     });
     toast.present();
   }
-  saveDiscoteca() {
-    //this.discotecadbService.remove(this.id);
-    //this.discoteca = this.discotecaForm.value;
-    //let nextKey = this.discoteca.name.trim();
-    //this.discoteca.id = nextKey;
-    //this.discotecadbService.setItem(nextKey, this.discoteca);
-    //console.warn(this.discotecaForm.value);
-    
-      let record = this.discotecaForm.value;
-      this.discoService.update_Disco(this.id,record);
-    
-      
-     
+
+  UpdateRecord() {
+    let record = this.discoForm.value as (IDiscoteca);
+    this.discodbService.update_discos(record, this.id).subscribe();
   }
+
+  displayDiscoteca(data: any){
+    this.discoteca = data.result;
+    this.discoForm.get('name').setValue(this.discoteca.name);
+    this.discoForm.get('cover').setValue(this.discoteca.cover);
+    this.discoForm.get('description').setValue(this.discoteca.description);
+  }
+
+
+
 }

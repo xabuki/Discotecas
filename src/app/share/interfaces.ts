@@ -1,5 +1,5 @@
 export interface IDiscoteca {
-    id: string;
+    _id: string;
     name: string;
     cover: string;
     description: string;

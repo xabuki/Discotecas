@@ -6,11 +6,11 @@
     <ion-button [routerLink]="['/home']" routerDirection="back" color="medium">
       <ion-icon slot="icon-only" name="arrow-back"></ion-icon>
     </ion-button>
-    <ion-title slot="secondary">Crear registro de Discoteca</ion-title>
+    <ion-title slot="secondary">Crear Discotecas</ion-title>
   </ion-toolbar>
 </ion-header>
 <ion-content>
-  <form [formGroup]="discotecaForm" (ngSubmit)="onSubmit()">
+  <form [formGroup]="discoForm" (ngSubmit)="onSubmit()">
     <ion-grid>
       <ion-row>
         <ion-col>
@@ -22,7 +22,7 @@
       </ion-row>
       <ion-row>
         <ion-col>
-          <ion-label>Portada:</ion-label>
+          <ion-label>Imagen:</ion-label>
         </ion-col>
         <ion-col>
           <ion-input type="url" placeholder="http://****" formControlName="cover"></ion-input>

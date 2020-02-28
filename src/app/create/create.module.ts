@@ -12,9 +12,9 @@ import { CreatePage } from './create.page';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     IonicModule,
-    CreatePageRoutingModule,
-    ReactiveFormsModule
+    CreatePageRoutingModule
   ],
   declarations: [CreatePage]
 })

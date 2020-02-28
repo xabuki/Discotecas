@@ -18,5 +18,3 @@ import { DetailsPage } from './details.page';
   declarations: [DetailsPage]
 })
 export class DetailsPageModule {}
-
-
