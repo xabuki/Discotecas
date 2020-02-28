@@ -44,14 +44,14 @@ app.use(function (req, res, next) {
 
 //Código del servidor web
 
-//Añadiendo Servicios GET
+
 app.get('/discotecas', (req, res) => {
     discoteca.find().then(result => {
         res.send(result);
     });
 });
 
-//Filtrado de datos. URI dinámicos
+
 app.get('/discotecas/:id', (req,res)=>{
     
     discoteca.findById(req.params.id).then(result=>{
@@ -70,7 +70,7 @@ app.get('/discotecas/:id', (req,res)=>{
     })
 });
 
-//Agregar datos con solicitudes POST
+
 app.use(bodyParser.json());
 app.post('/discotecas', (req, res)=> {
     let newDiscoteca = new discoteca({
@@ -87,7 +87,7 @@ app.post('/discotecas', (req, res)=> {
         res.send(data);
     });
 });
-//Actualización de datos con solicitudes PUT
+
 app.put('/discotecas/:id', (req,res) =>{
     discoteca.findByIdAndUpdate(req.params.id, {
         $set: {
@@ -104,7 +104,7 @@ app.put('/discotecas/:id', (req,res) =>{
     });
 });
 
-//Eliminiación de datos con solicitudes delete
+//Deelete
 app.delete('/discotecas/:id', (req, res) => {
     discoteca.findByIdAndRemove(req.params.id).then(result => {
         let data = { error: false, result : result}
