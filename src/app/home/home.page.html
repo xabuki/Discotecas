@@ -1,29 +1,102 @@
 <ion-header>
   <ion-toolbar>
-  <ion-buttons slot="end">
-  <ion-menu-button></ion-menu-button>
-  </ion-buttons>
-  <ion-title slot="primary">
-  Recordatorio de discotecas
+  <ion-title>
+  Recordatorio de películas
   </ion-title>
   </ion-toolbar>
  </ion-header>
- <ion-content>
-  <div class="ion-padding">
-  <ion-list>
-  <ion-item *ngFor="let discoteca of discotecas"
- (click)="discotecaTapped(discoteca)">
-  <ion-thumbnail slot="start">
-  <img src="{{discoteca.cover}}">
-  </ion-thumbnail>
-  <ion-label> {{discoteca.name}}</ion-label>
+ <ion-content padding>
+  <ion-grid fixed>
+  <ion-row>
+  <ion-col>
+  <ion-item>
+  <ion-input placeholder="Introduce Nombre"
+ [(ngModel)]="discoName"></ion-input>
   </ion-item>
-  </ion-list>
-  </div>
+  </ion-col>
+  <ion-col>
+  <ion-item>
+  <ion-input placeholder="Introduce Imagen"
+ [(ngModel)]="discoCover"></ion-input>
+  </ion-item>
+  </ion-col>
+  <ion-col>
+  <ion-item>
+  <ion-input placeholder="Introduce Descripción de discotecas"
+ [(ngModel)]="discoDescription"></ion-input>
+  </ion-item>
+  </ion-col>
+  </ion-row>
+  <ion-row>
+  <ion-col text-center>
+  <ion-button (click)="createRecord()"
+  [disabled]="!discoName || !discoCover || !discoDescription"
+  >
+  <ion-icon size="small" slot="icon-only" name="add"></ion-icon>
+  &nbsp;Añadir Discoteca
+  </ion-button>
+  </ion-col>
+  </ion-row>
+  </ion-grid>
+  <ion-card *ngFor="let item of discos">
+  <span *ngIf="!item.isEdit; else elseBlock">
+  <img src="{{item.cover}} ">
+  <ion-card-header>
+  <ion-card-title>{{item.name}}  </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+  <ion-label>{{item.description}}</ion-label>
+  <ion-button shape="round" color="secondary" size="small"
+ (click)="editRecord(item)">
+  <ion-icon size="small" slot="icon-only" name="create"></ionicon>
+  </ion-button>
+
+  <ion-button shape="round" color="danger" size="small"
+ (click)="removeRecord(item.id)">
+  <ion-icon size="small" slot="icon-only" name="trash"></ionicon>
+  </ion-button>
+  </ion-card-content>
+  </span>
+  <ng-template #elseBlock>
+  <ion-card-header>
+  <ion-card-title>
+  <ion-grid>
+  <ion-row>
+  <ion-col>
+  Edit
+  </ion-col>
+  <ion-col>
+  <ion-button fill="clear" color="medium" size="small"
+ (click)="item.isEdit = false">
+  Cancel
+  </ion-button>
+  </ion-col>
+  <ion-col>
+  <ion-button fill="outline" color="success" size="small"
+ (click)="updateRecord(item)">
+  Update
+  </ion-button>
+  </ion-col>
+  </ion-row>
+  </ion-grid>
+  </ion-card-title>
+  </ion-card-header>
+  <ion-card-content>
+  <ion-item>
+  <ion-label><strong>Título</strong></ion-label>
+  <ion-input type="text" [(ngModel)]="item.editName"></ion-input>
+  </ion-item>
+  <ion-item>
+  <ion-label><strong>Imaagne</strong></ion-label>
+
+  <ion-input type="text" [(ngModel)]="item.editCover"></ioninput>
+  </ion-item>
+  <ion-item>
+  <ion-label><strong>Descripción</strong></ion-label>
+  <ion-input type="text"
+ [(ngModel)]="item.editDescription"></ion-input>
+  </ion-item>
+  </ion-card-content>
+  </ng-template>
+  </ion-card>
  </ion-content>
- <ion-toolbar>
-  <img src="/assets/images/4Vientos_iconoBlanco.PNG" />
-  <ion-title slot="primary">
-  Desarrollo de Interfaces
-  </ion-title>
- </ion-toolbar>

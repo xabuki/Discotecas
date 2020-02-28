@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
-import { DiscotecadbService } from '../core/discotecadbservice.service';
+import {DiscocrudService} from '../core/discocrud.service';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
 import { IDiscoteca } from '../share/interfaces';
@@ -12,9 +12,13 @@ import { IDiscoteca } from '../share/interfaces';
 export class CreatePage implements OnInit {
   discoteca: IDiscoteca;
  discotecaForm: FormGroup;
+ discos: any;
+ discoName: string;
+ discoCover: string;
+ discoDescription: string;
   constructor(
     private router: Router,
-    private discotecadbService: DiscotecadbService,
+    private discotecaService: DiscocrudService,
     public toastController: ToastController
   ) { }
   ngOnInit() {
@@ -48,10 +52,12 @@ export class CreatePage implements OnInit {
     toast.present();
   }
   saveDiscoteca() {
-    this.discoteca = this.discotecaForm.value;
-    let nextKey = this.discoteca.name.trim();
-    this.discoteca.id = nextKey;
-    this.discotecadbService.setItem(nextKey, this.discoteca);
-    console.warn(this.discotecaForm.value);
+  //  this.discoteca = this.discotecaForm.value;
+   // let nextKey = this.discoteca.name.trim();
+   // this.discoteca.id = nextKey;
+   // this.discotecadbService.setItem(nextKey, this.discoteca);
+   // console.warn(this.discotecaForm.value);
+   let record = this.discotecaForm.value;
+ this.discotecaService.create_Disco(record) ;
   }
 }
