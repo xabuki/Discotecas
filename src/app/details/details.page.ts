@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DiscotecadbService } from '../core/discotecadbservice.service';
+import {DiscocrudService} from '../core/discocrud.service';
 import { IDiscoteca } from '../share/interfaces';
 import { ToastController } from '@ionic/angular';
 @Component({
@@ -11,6 +12,7 @@ import { ToastController } from '@ionic/angular';
 export class DetailsPage implements OnInit {
  id: string;
  public discoteca: IDiscoteca;
+ public discocrudService: DiscocrudService;
  constructor(
   private activatedrouter: ActivatedRoute,
   private router: Router,
@@ -37,7 +39,7 @@ export class DetailsPage implements OnInit {
   icon: 'delete',
   text: 'ACEPTAR',
   handler: () => {
-  this.moviedbService.remove(id);
+  this.discocrudService.delete_Disco(id);
   this.router.navigate(['home']);
   }
   }, {
